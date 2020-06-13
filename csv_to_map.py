@@ -1,8 +1,9 @@
 import csv
 import calc
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 
-RADIUS = 20  # Radius for dots to be placed
+RADIUS = 15  # Radius for dots to be placed
+FONT = ImageFont.truetype('arial.ttf', 60)
 
 
 def main():
@@ -11,10 +12,14 @@ def main():
 
         with Image.open('stitched_map.png') as im:
             draw = ImageDraw.Draw(im)
+            step = 1  # Current step
+
             for row in table:
                 if row[2] == '1':  # Check if challenge has interactable (coords)
                     x, y = calc.calc_coord(int(row[5]), int(row[6]))
-                    draw.ellipse((x-RADIUS, y-RADIUS, x+RADIUS, y+RADIUS), 'red')
+                    draw.ellipse((x-RADIUS, y-RADIUS, x+RADIUS, y+RADIUS), 'lime')
+                    draw.text((x, y), str(step), 'blue', FONT)
+                    step += 1
 
             im.save('annotated_map.png')
 
