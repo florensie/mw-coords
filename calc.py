@@ -1,6 +1,6 @@
-TV_STATION = {'orig': (14561, 18433), 'new': (6907, 5456)}  # Intel location 1 (front desk TV station)
-AIRPORT = {'orig': (-22512, 19712), 'new': (3007, 5324)}  # Intel location 2 (airport gate)
-AFB = {'orig': (3775, 48420), 'new': (5775, 2331)}  # Intel location 5 (AFB)
+TV_STATION = {'orig': (14561, 18433), 'new': (4442, 3756)}  # Intel location 1 (front desk TV station)
+AIRPORT = {'orig': (-22512, 19712), 'new': (2386, 3673)}  # Intel location 2 (airport gate)
+AFB = {'orig': (3775, 48420), 'new': (3847, 2089)}  # Intel location 5 (AFB)
 
 # Calculate scale using distance between tv_station and airport intel locations
 diff_orig = abs(TV_STATION['orig'][0] - AIRPORT['orig'][0])
