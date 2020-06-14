@@ -5,7 +5,7 @@ import annotate_map
 with open('es_mark.json') as f:
     es = json.load(f)
 
-    with Image.open('stitched_map.png') as im:
+    with Image.open('data/stitched_map.png') as im:
         for hit in es['hits']['hits']:
             x, y, z = hit['_source']['translation']
 

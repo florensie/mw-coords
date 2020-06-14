@@ -5,10 +5,10 @@ import calc
 
 
 def main():
-    with open('intel_challenges.csv') as f:
+    with open('data/intel_challenges.csv') as f:
         table = csv.reader(f)
 
-        with Image.open('stitched_map.png') as im:
+        with Image.open('data/stitched_map.png') as im:
             step = 1  # Current step
 
             for row in table:

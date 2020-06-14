@@ -77,7 +77,7 @@ def get_all_in_box(res, xy_sw, xy_ne):
 
 
 if __name__ == '__main__':
-    with open('mp_don3.d3dbsp') as f:
+    with open('data/mp_don3.d3dbsp') as f:
         res = to_dict(f)
 
     box = bool(input('bounding box? (0/1)'))
@@ -98,5 +98,5 @@ if __name__ == '__main__':
         for i, entity in enumerate(res):
             res = es.index(index=index, id=i, body=entity)
     elif dump_type == 'json':
-        with open('mp_don3.json', 'w') as f_out:
+        with open('data/mp_don3.json', 'w') as f_out:
             json.dump(res, f_out, indent=4, sort_keys=True)

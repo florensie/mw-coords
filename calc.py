@@ -37,7 +37,7 @@ def main():
     x, y = calc_coord(x_orig, y_orig, invert)
     print(x, y)
 
-    with Image.open('stitched_map.png') as im:
+    with Image.open('data/stitched_map.png') as im:
         im = annotate_map.annotate(im, (x_orig, y_orig), f'({round(x)}, {round(y)})')
         annotate_map.rescale(im, 2).show()
 
