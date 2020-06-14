@@ -2,7 +2,7 @@ import json
 from PIL import Image
 import annotate_map
 
-with open('es_mark.json') as f:
+with open('data/es_mark.json') as f:
     es = json.load(f)
 
     with Image.open('data/stitched_map.png') as im:
