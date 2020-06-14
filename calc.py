@@ -1,3 +1,6 @@
+import annotate_map
+from PIL import Image
+
 TV_STATION = {'orig': (14561, 18433), 'new': (4442, 3756)}  # Intel location 1 (front desk TV station)
 AIRPORT = {'orig': (-22512, 19712), 'new': (2386, 3673)}  # Intel location 2 (airport gate)
 AFB = {'orig': (3775, 48420), 'new': (3847, 2089)}  # Intel location 5 (AFB)
@@ -15,17 +18,28 @@ offset_x = TV_STATION['new'][0] - scale_x * TV_STATION['orig'][0]
 offset_y = TV_STATION['new'][1] - scale_y * TV_STATION['orig'][1]
 
 
-def calc_coord(x, y):
+def calc_coord(x, y, invert=False):
     # Calculate new coord for x and y
-    x = x * scale_x + offset_x
-    y = y * scale_y + offset_y
+    if not invert:
+        x = x * scale_x + offset_x
+        y = y * scale_y + offset_y
+    else:
+        x = (x - offset_x) / scale_x
+        y = (y - offset_y) / scale_y
     return x, y
 
 
 def main():
-    x = float(input('x: '))
-    y = float(input('y: '))
-    print(calc_coord(x, y))
+    x_orig = float(input('x: '))
+    y_orig = float(input('y: '))
+    invert = bool(input('invert (0/1): '))
+
+    x, y = calc_coord(x_orig, y_orig, invert)
+    print(x, y)
+
+    with Image.open('stitched_map.png') as im:
+        im = annotate_map.annotate(im, (x_orig, y_orig), f'({round(x)}, {round(y)})')
+        annotate_map.rescale(im, 2).show()
 
 
 if __name__ == '__main__':

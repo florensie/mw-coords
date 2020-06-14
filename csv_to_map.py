@@ -1,9 +1,7 @@
 import csv
+from PIL import Image
+import annotate_map
 import calc
-from PIL import Image, ImageDraw, ImageFont
-
-RADIUS = 15  # Radius for dots to be placed
-FONT = ImageFont.truetype('arial.ttf', 60)
 
 
 def main():
@@ -11,16 +9,14 @@ def main():
         table = csv.reader(f)
 
         with Image.open('stitched_map.png') as im:
-            draw = ImageDraw.Draw(im)
             step = 1  # Current step
 
             for row in table:
                 if row[2] == '1':  # Check if challenge has interactable (coords)
-                    x, y = calc.calc_coord(int(row[5]), int(row[6]))
-                    draw.ellipse((x-RADIUS, y-RADIUS, x+RADIUS, y+RADIUS), 'lime')
-                    draw.text((x, y), str(step), 'blue', FONT)
+                    annotate_map.annotate(im, (int(row[5]), int(row[6])), str(step))
                     step += 1
 
+            print("Success. Saving map.")
             im.save('annotated_map.png')
 
 
