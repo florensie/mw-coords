@@ -32,14 +32,15 @@ def calc_coord(x, y, invert=False):
 def main():
     x_orig = float(input('x: '))
     y_orig = float(input('y: '))
-    invert = bool(input('invert (0/1): '))
 
-    x, y = calc_coord(x_orig, y_orig, invert)
+    x, y = calc_coord(x_orig, y_orig, input('invert?') in ['yes', 'y'])
     print(x, y)
 
     with Image.open('data/stitched_map.png') as im:
-        im = annotate_map.annotate(im, (x_orig, y_orig), f'({round(x)}, {round(y)})')
+        im = annotate_map.annotate(im, (x_orig, y_orig), f'({round(x)}, {round(y)})', marker_color='yellow', scale=.2)
         annotate_map.rescale(im, 2).show()
+        if input('save?') in ['yes', 'y']:
+            im.save('data/annotated_map.png')
 
 
 if __name__ == '__main__':

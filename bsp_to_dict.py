@@ -80,8 +80,7 @@ if __name__ == '__main__':
     with open('data/mp_don3.d3dbsp') as f:
         res = to_dict(f)
 
-    box = bool(input('bounding box? (0/1)'))
-    if box:
+    if input('bounding box?') in ['yes', 'y']:
         xy = []
         for i in range(4):
             if i % 2 == 0:

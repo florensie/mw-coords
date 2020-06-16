@@ -12,8 +12,10 @@ with open('data/es_mark.json') as f:
             # DOM FLAG: text = hit['_source']['43887'][1:].upper()
             # text = hit['_source']['desc']
             text = ''
+            # text = hit['_source']['desc']
 
-            annotate_map.annotate(im, (x, y), text, scale=.5)
+            annotate_map.annotate(im, (x, y), text, scale=.2)
 
         print("Success. Saving map.")
         annotate_map.rescale(im, 2).show()
+        im.save('data/annotated_map.png')
