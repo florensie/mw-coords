@@ -1,5 +1,6 @@
 import json
 from elasticsearch import Elasticsearch
+from calc import DATA_PATH
 import calc
 
 # These are obfuscated
@@ -76,10 +77,10 @@ def get_all_in_box(res, xy_sw, xy_ne):
     return result
 
 
-if __name__ == '__main__':
-    with open('data/mp_don3.d3dbsp') as f:
-        res = to_dict(f)
+def main():
+    res = to_dict((DATA_PATH / 'mp_don3.d3dbsp').open())
 
+    # Restrict to coords in bounding box
     if input('bounding box?') in ['yes', 'y']:
         xy = []
         for i in range(4):
@@ -97,5 +98,8 @@ if __name__ == '__main__':
         for i, entity in enumerate(res):
             res = es.index(index=index, id=i, body=entity)
     elif dump_type == 'json':
-        with open('data/mp_don3.json', 'w') as f_out:
-            json.dump(res, f_out, indent=4, sort_keys=True)
+        json.dump(res, (DATA_PATH / 'mp_don3.json').open('w'), indent=4, sort_keys=True)
+
+
+if __name__ == '__main__':
+    main()

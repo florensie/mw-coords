@@ -1,16 +1,17 @@
 import csv
 from PIL import Image
 import annotate_map
+from calc import DATA_PATH
 
 WEEK_COLORS = ['lime', 'yellow', 'cyan', 'magenta', 'crimson', 'blueviolet']
 ALT_LOC = [(2, 4), (4, 2)]  # hard-coded alternate text locations to prevent overlap
 
 
 def main():
-    with open('data/intel_challenges.csv') as f:
+    with open(DATA_PATH / 'intel_challenges.csv') as f:
         table = csv.reader(f)
 
-        with Image.open('data/stitched_map.png') as im:
+        with Image.open(DATA_PATH / 'stitched_map.png') as im:
             week = 0
             step = 1  # Current step
 
@@ -29,7 +30,7 @@ def main():
             print("Success. Saving map.")
             im = annotate_map.rescale(im, 2)
             im.show()
-            im.convert('RGB').save('data/intel_map.jpg', quality=85)
+            im.convert('RGB').save(DATA_PATH / 'intel_map.jpg', quality=85)
 
 
 if __name__ == '__main__':

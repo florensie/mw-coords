@@ -1,5 +1,9 @@
 import annotate_map
+from pathlib import Path
 from PIL import Image
+import sys
+
+DATA_PATH = Path(sys.path[0] / 'data')
 
 TV_STATION = {'orig': (14561, 18433), 'new': (4442, 3756)}  # Intel location 1 (front desk TV station)
 AIRPORT = {'orig': (-22512, 19712), 'new': (2386, 3673)}  # Intel location 2 (airport gate)
@@ -36,11 +40,11 @@ def main():
     x, y = calc_coord(x_orig, y_orig, input('invert?') in ['yes', 'y'])
     print(x, y)
 
-    with Image.open('data/stitched_map.png') as im:
+    with Image.open(DATA_PATH / 'stitched_map.png') as im:
         im = annotate_map.annotate(im, (x_orig, y_orig), f'({round(x)}, {round(y)})', marker_color='yellow', scale=.2)
         annotate_map.rescale(im, 2).show()
         if input('save?') in ['yes', 'y']:
-            im.save('data/annotated_map.png')
+            im.save(DATA_PATH / 'annotated_map.png')
 
 
 if __name__ == '__main__':
