@@ -3,7 +3,7 @@ from pathlib import Path
 from PIL import Image
 import sys
 
-DATA_PATH = Path(sys.path[0] / 'data')
+DATA_PATH = Path(sys.path[0]) / 'data'
 
 TV_STATION = {'orig': (14561, 18433), 'new': (4442, 3756)}  # Intel location 1 (front desk TV station)
 AIRPORT = {'orig': (-22512, 19712), 'new': (2386, 3673)}  # Intel location 2 (airport gate)
