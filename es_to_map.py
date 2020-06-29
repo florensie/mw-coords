@@ -4,19 +4,23 @@ from pathlib import Path
 import annotate_map
 from calc import DATA_PATH
 
-es = json.load(Path('data/es_mark.json').open())
 
-with Image.open(DATA_PATH / 'stitched_map.png') as im:
-    for hit in es['hits']['hits']:
-        x, y, z = hit['_source']['translation']
+if __name__ == '__main__':
+    es = json.load(Path('data/es_mark.json').open())
 
-        # DOM FLAG: text = hit['_source']['43887'][1:].upper()
-        # text = hit['_source']['desc']
-        text = ''
-        # text = hit['_source']['desc']
+    with Image.open(DATA_PATH / 'stitched_map.png') as im:
+        for i, hit in enumerate(es['hits']['hits'], start=1):
+            x, y, z = hit['_source']['translation']
 
-        annotate_map.annotate(im, (x, y), text, scale=.2)
+            # DOM FLAG: text = hit['_source']['43887'][1:].upper()
+            # text = hit['_source']['desc1']
+            # text = ''
+            # text = hit['_source']['model']
+            text = hit['_source']['43632']
 
-    print("Success. Saving map.")
-    annotate_map.rescale(im, 2).show()
-    im.save(DATA_PATH / 'annotated_map.png')
+            annotate_map.annotate(im, (x, y), text, scale=1)
+
+        print("Success. Saving map.")
+        im = annotate_map.rescale(im, 2)
+        im.show()
+        im.convert('RGB').save(DATA_PATH / 'annotated_map.jpg')
