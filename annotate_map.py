@@ -3,6 +3,7 @@ import calc
 
 MARKER_RADIUS = 20
 FONT_SIZE = 55
+MAP_OUT_OF_BOUNDS = (819, 819, 7373, 7373)  # Crop this box to remove out of bounds area
 
 
 def annotate(im, xy, text='', scale=1, marker_color='lime', text_color='white', text_loc=(1, 1)):
@@ -40,3 +41,7 @@ def rescale(im, factor):
     :return: rescaled image
     """
     return im.resize((int(im.width/factor), int(im.height/factor)))
+
+
+def crop_out_of_bounds(im):
+    return im.crop(MAP_OUT_OF_BOUNDS)
