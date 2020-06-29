@@ -1,18 +1,26 @@
 import json
+
+from PIL import Image
 from elasticsearch import Elasticsearch
+
+import annotate_map
 from calc import DATA_PATH
 import calc
 
 # These are obfuscated
 KEY_MAPPINGS = {
     '212': 'type',
-    '709': 'translation',
-    '80': 'rotation',
     '1072': 'desc1',
     '845': 'desc2',
+
+    '709': 'translation',
+    '80': 'rotation',
+    '2553': 'scale',
+
     '652': 'model',
     '43840': 'modes',
-    '43887': 'objective_letter?',
+    '43887': 'extra_data',
+    '44105': 'team',  # (allies, axis) for spawn selection camera
 
     # These were left in in one of the S03 builds
     '63913': 'lgbudgetingprobesize',
@@ -53,6 +61,8 @@ def to_dict(f_in):
             if key == 'rotation' or key == 'translation':
                 value = value.split(' ')  # Split x, y, z values
                 value = list(map(float,  value))  # Convert strings to floats
+            elif key == '20185':  # Not sure what it means though
+                value = bool(int(value))  # 0, 1 -> False, True
 
             current_dict[key] = value
 
@@ -99,6 +109,16 @@ def main():
             res = es.index(index=index, id=i, body=entity)
     elif dump_type == 'json':
         json.dump(res, (DATA_PATH / 'mp_don3.json').open('w'), indent=4, sort_keys=True)
+    elif dump_type == 'map':
+        # Why?
+        with Image.open(DATA_PATH / 'stitched_map.png') as im:
+            for ent in res:
+                if 'translation' in ent.keys() and ent.get('model') != 'fullbody_hero_price_urban'\
+                        and ent.get('type') == 'script_struct':
+                    print('kek')
+                    im = annotate_map.annotate(im, ent['translation'][:2], scale=.3)
+
+            im.convert('RGB').save(DATA_PATH / 'annotated_map.jpg')
 
 
 if __name__ == '__main__':
