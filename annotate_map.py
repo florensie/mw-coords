@@ -27,9 +27,9 @@ def annotate(im, xy, text='', scale=1, marker_color='lime', text_color='white', 
     x, y = calc.calc_coord(*xy)
     radius = MARKER_RADIUS * scale
     draw.ellipse((x - radius, y - radius, x + radius, y + radius), marker_color,
-                 outline='black', width=5)
+                 outline='black', width=round(5*scale))
     draw.text((x + radius * text_loc[0], y + radius * text_loc[1]), text, text_color, font,
-              stroke_width=3, stroke_fill='black')
+              stroke_width=round(3*scale), stroke_fill='black')
     return im
 
 
