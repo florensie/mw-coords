@@ -19,7 +19,7 @@ def main():
                 if row[2] == '1':  # Check if challenge has interactable (coords)
                     text_loc = (1, 1)
                     if (week, step) in ALT_LOC:
-                        text_loc = (1, -3)
+                        text_loc = (1, -4)
                     annotate_map.annotate(im, (int(row[5]), int(row[6])), f'W{week} S{step}',
                                           marker_color=WEEK_COLORS[week-1], text_loc=text_loc)
                     step += 1
@@ -28,6 +28,7 @@ def main():
                     step = 1
 
             print("Success. Saving map.")
+            im = annotate_map.crop_out_of_bounds(im)
             im = annotate_map.rescale(im, 2)
             im.show()
             im.convert('RGB').save(DATA_PATH / 'intel_map.jpg', quality=85)
