@@ -3,7 +3,7 @@ from PIL import Image
 import annotate_map
 from calc import DATA_PATH
 
-WEEK_COLORS = ['lime', 'yellow', 'cyan', 'magenta', 'crimson', 'blueviolet']
+WEEK_COLORS = ['lime', 'yellow', 'cyan', 'magenta', 'crimson', 'blueviolet',  'red', 'green', 'tan', 'slategrey']
 ALT_LOC = [(2, 4), (4, 2)]  # hard-coded alternate text locations to prevent overlap
 
 
@@ -20,7 +20,7 @@ def main():
                     text_loc = (1, 1)
                     if (week, step) in ALT_LOC:
                         text_loc = (1, -4)
-                    annotate_map.annotate(im, (int(row[5]), int(row[6])), f'W{week} S{step}',
+                    annotate_map.annotate(im, (int(float(row[5])), int(float(row[6]))), f'W{week} S{step}',
                                           marker_color=WEEK_COLORS[week-1], text_loc=text_loc)
                     step += 1
                 else:
